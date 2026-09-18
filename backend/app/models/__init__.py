@@ -7,7 +7,7 @@ from app.models.feedback import Feedback
 from app.models.report import Report
 from app.models.audit_log import AuditLog
 from app.models.search_history import SearchHistory
-
+from app.models.policy_analysis import PolicyAnalysis
 __all__ = [
     "User",
     "Policy",
@@ -18,4 +18,5 @@ __all__ = [
     "Report",
     "AuditLog",
     "SearchHistory",
+    "PolicyAnalysis",
 ]

@@ -74,4 +74,9 @@ export class PolicyService {
   getAuditLogs(id: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.API_URL}/${id}/audit-logs`);
   }
+
+  analyzePolicy(id: number): Observable<any> {
+    return this.http.get<any>(`http://localhost:8000/analyzer/${id}`);
+  }
 }
+

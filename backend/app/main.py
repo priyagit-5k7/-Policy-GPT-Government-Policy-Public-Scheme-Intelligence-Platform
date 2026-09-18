@@ -15,6 +15,7 @@ from app.models.feedback import Feedback
 from app.models.report import Report
 from app.models.audit_log import AuditLog
 from app.models.search_history import SearchHistory
+from app.models.policy_analysis import PolicyAnalysis
 
 # Import routers
 from app.routers.auth import router as auth_router
@@ -24,6 +25,7 @@ from app.routers.feedback import router as feedback_router
 from app.routers.notification import router as notification_router
 from app.routers.report import router as report_router
 from app.routers.analytics import router as analytics_router
+from app.routers.analyzer import router as analyzer_router
 
 # Create all database tables
 Base.metadata.create_all(bind=engine)
@@ -89,7 +91,11 @@ def run_migrations():
         "ALTER TABLE reports ADD COLUMN IF NOT EXISTS content TEXT;",
         "ALTER TABLE reports ADD COLUMN IF NOT EXISTS summary TEXT;",
         "ALTER TABLE reports ADD COLUMN IF NOT EXISTS created_by INTEGER;",
-        "ALTER TABLE reports ADD COLUMN IF NOT EXISTS created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP;"
+        "ALTER TABLE reports ADD COLUMN IF NOT EXISTS created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP;",
+        "ALTER TABLE policy_analyses ADD COLUMN IF NOT EXISTS benefits TEXT;",
+        "ALTER TABLE policy_analyses ADD COLUMN IF NOT EXISTS potential_risks TEXT;",
+        "ALTER TABLE policy_analyses ADD COLUMN IF NOT EXISTS implementation_complexity VARCHAR(50);",
+        "ALTER TABLE policy_analyses ADD COLUMN IF NOT EXISTS similar_policies TEXT;"
     ]
     try:
         with engine.connect() as conn:
@@ -277,7 +283,7 @@ app.include_router(feedback_router)
 app.include_router(notification_router)
 app.include_router(report_router)
 app.include_router(analytics_router)
-
+app.include_router(analyzer_router)
 
 @app.get("/", tags=["Health"])
 def home():

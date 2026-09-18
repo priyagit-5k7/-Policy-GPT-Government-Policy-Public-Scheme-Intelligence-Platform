@@ -1,0 +1,193 @@
+<div style="max-width: 1200px; margin: 0 auto; padding: 20px; padding-bottom: 60px;">
+
+    <div style="display: flex; gap: 16px; align-items: center; margin-bottom: 24px;">
+        <button (click)="goBack()" class="btn-primary"
+            style="padding: 8px 16px; display: flex; align-items: center; gap: 8px; border-radius: 8px; font-weight: 600;">
+            <i class="material-icons">arrow_back</i> Back to Policies
+        </button>
+        <h2
+            style="margin: 0; color: var(--color-blue); display: flex; align-items: center; gap: 12px; font-weight: 700;">
+            <i class="material-icons" style="color: var(--color-saffron); font-size: 2rem;">analytics</i>
+            AI Policy Impact & Risk Analyzer
+        </h2>
+    </div>
+
+    <div *ngIf="isLoading" style="text-align: center; margin-top: 60px;">
+        <i class="material-icons"
+            style="font-size: 3rem; color: var(--color-blue); animation: spin 1.5s linear infinite; margin-bottom: 12px;">sync</i>
+        <h3 style="color: var(--color-blue);">Analyzing Policy...</h3>
+    </div>
+
+    <div *ngIf="!isLoading && errorMsg" class="glass-container"
+        style="border-left: 6px solid red; padding: 30px; text-align: center;">
+        <i class="material-icons" style="font-size: 3rem; color: red;">error</i>
+        <h3 style="color: red;">Authorization Error</h3>
+        <p>{{ errorMsg }}</p>
+    </div>
+
+    <div *ngIf="!isLoading && !errorMsg && analysis" class="slide-up">
+        <!-- Header info -->
+        <div class="glass-container"
+            style="padding: 24px; border-radius: 16px; margin-bottom: 24px; border-top: 4px solid var(--color-blue);">
+            <h3 style="margin: 0 0 8px 0; color: var(--color-blue); font-size: 1.5rem;">{{ policy?.title }}</h3>
+            <p style="color: var(--color-text-muted); margin: 0; font-size: 1rem;"><strong
+                    style="color: var(--color-text);">Category:</strong> {{ policy?.category }} &nbsp;|&nbsp; <strong
+                    style="color: var(--color-text);">Department:</strong> {{ policy?.department }}</p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 24px;">
+
+            <!-- Impact Score -->
+            <div class="glass-container"
+                style="padding: 24px; border-radius: 16px; border-left: 6px solid var(--color-green);">
+                <h4
+                    style="margin: 0 0 16px 0; font-size: 1.3rem; color: var(--color-green); display: flex; align-items: center; gap: 8px;">
+                    <i class="material-icons">trending_up</i> Overall Impact Score
+                </h4>
+                <div style="font-size: 3rem; font-weight: 900; color: var(--color-text); margin-bottom: 16px;">
+                    {{ analysis.overall_impact_score }}<span
+                        style="font-size: 1.5rem; color: var(--color-text-muted);">/100</span>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 12px;">
+                    <div style="display: flex; justify-content: space-between;"><span>Social (25%):</span> <strong>{{
+                            analysis.social_impact }}</strong></div>
+                    <div style="display: flex; justify-content: space-between;"><span>Economic (25%):</span> <strong>{{
+                            analysis.economic_impact }}</strong></div>
+                    <div style="display: flex; justify-content: space-between;"><span>Environmental (25%):</span>
+                        <strong>{{ analysis.environmental_impact }}</strong>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;"><span>Implementation (25%):</span>
+                        <strong>{{ analysis.implementation_impact }}</strong>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Risk Score -->
+            <div class="glass-container"
+                style="padding: 24px; border-radius: 16px; border-left: 6px solid var(--color-saffron);">
+                <h4
+                    style="margin: 0 0 16px 0; font-size: 1.3rem; color: var(--color-saffron); display: flex; align-items: center; gap: 8px;">
+                    <i class="material-icons">warning</i> Overall Risk Score
+                </h4>
+                <div style="font-size: 3rem; font-weight: 900; color: var(--color-text); margin-bottom: 8px;">
+                    {{ analysis.overall_risk_score }}<span
+                        style="font-size: 1.5rem; color: var(--color-text-muted);">/100</span>
+                </div>
+                <div style="display: inline-block; padding: 4px 12px; border-radius: 12px; font-weight: 700; margin-bottom: 16px; font-size: 0.9rem; text-transform: uppercase;"
+                    [ngStyle]="{
+               'background': analysis.risk_classification === 'Low' ? 'rgba(19, 136, 8, 0.15)' : analysis.risk_classification === 'Medium' ? 'rgba(255, 193, 7, 0.15)' : 'rgba(244, 67, 54, 0.15)',
+               'color': analysis.risk_classification === 'Low' ? 'var(--color-green)' : analysis.risk_classification === 'Medium' ? '#ff9800' : 'red'
+             }">
+                    {{ analysis.risk_classification }} RISK
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 12px;">
+                    <div style="display: flex; justify-content: space-between;"><span>Financial (20%):</span> <strong>{{
+                            analysis.financial_risk }}</strong></div>
+                    <div style="display: flex; justify-content: space-between;"><span>Implementation (20%):</span>
+                        <strong>{{ analysis.implementation_risk }}</strong>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;"><span>Social (20%):</span> <strong>{{
+                            analysis.social_risk }}</strong></div>
+                    <div style="display: flex; justify-content: space-between;"><span>Environmental (20%):</span>
+                        <strong>{{ analysis.environmental_risk }}</strong>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;"><span>Governance (20%):</span>
+                        <strong>{{ analysis.governance_risk }}</strong>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Explanations & Recommendations -->
+        <div
+            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 24px; margin-top: 24px;">
+            <div class="glass-container" style="padding: 24px; border-radius: 16px;">
+                <h4
+                    style="margin: 0 0 16px 0; font-size: 1.2rem; color: var(--color-blue); border-bottom: 1px solid var(--glass-border); padding-bottom: 8px;">
+                    <i class="material-icons" style="vertical-align: middle;">lightbulb</i> Explanations / NLP
+                    Heuristics
+                </h4>
+                <div style="display: flex; flex-direction: column; gap: 12px;">
+                    <div *ngFor="let key of getExplanationKeys()"
+                        style="background: rgba(0,0,0,0.02); padding: 12px; border-radius: 8px; border-left: 3px solid var(--color-blue);">
+                        <strong style="color: var(--color-blue);">{{ key }}:</strong>
+                        <span style="color: var(--color-text); display: block; margin-top: 4px;">{{
+                            analysis.explanations[key] }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-container" style="padding: 24px; border-radius: 16px;">
+                <h4
+                    style="margin: 0 0 16px 0; font-size: 1.2rem; color: var(--color-saffron); border-bottom: 1px solid var(--glass-border); padding-bottom: 8px;">
+                    <i class="material-icons" style="vertical-align: middle;">assistant</i> AI Recommendations &
+                    Complexity
+                </h4>
+                <div style="margin-bottom: 16px;">
+                    <strong>Implementation Complexity:</strong>
+                    <span
+                        [ngStyle]="{'color': analysis.implementation_complexity === 'Low' ? 'var(--color-green)' : analysis.implementation_complexity === 'Medium' ? '#ff9800' : 'red', 'font-weight': 'bold'}">
+                        {{ analysis.implementation_complexity }}
+                    </span>
+                </div>
+                <ul style="padding-left: 20px; line-height: 1.6; color: var(--color-text);">
+                    <li *ngFor="let rec of analysis.recommendations" style="margin-bottom: 12px;">{{ rec }}</li>
+                </ul>
+                <div *ngIf="!analysis.recommendations || analysis.recommendations.length === 0"
+                    style="color: var(--color-text-muted);">
+                    No specific recommendations driven from analysis.
+                </div>
+            </div>
+        </div>
+
+        <!-- Benefits and Potential Risks -->
+        <div
+            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 24px; margin-top: 24px;">
+            <div class="glass-container"
+                style="padding: 24px; border-radius: 16px; border-left: 4px solid var(--color-green);">
+                <h4 style="margin: 0 0 16px 0; font-size: 1.1rem; color: var(--color-green);">
+                    <i class="material-icons" style="vertical-align: middle;">thumb_up</i> Benefits
+                </h4>
+                <ul style="padding-left: 20px; color: var(--color-text); margin:0;">
+                    <li *ngFor="let benefit of analysis.benefits" style="margin-bottom: 8px;">{{ benefit }}</li>
+                </ul>
+            </div>
+            <div class="glass-container" style="padding: 24px; border-radius: 16px; border-left: 4px solid red;">
+                <h4 style="margin: 0 0 16px 0; font-size: 1.1rem; color: red;">
+                    <i class="material-icons" style="vertical-align: middle;">warning_amber</i> Potential Risks
+                </h4>
+                <ul style="padding-left: 20px; color: var(--color-text); margin:0;">
+                    <li *ngFor="let risk of analysis.potential_risks" style="margin-bottom: 8px;">{{ risk }}</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Similar Existing Policies -->
+        <div class="glass-container" style="padding: 24px; border-radius: 16px; margin-top: 24px;">
+            <h4
+                style="margin: 0 0 16px 0; font-size: 1.2rem; color: var(--color-blue); border-bottom: 1px solid var(--glass-border); padding-bottom: 8px;">
+                <i class="material-icons" style="vertical-align: middle;">compare_arrows</i> Similar Existing Policies
+            </h4>
+            <div *ngIf="!analysis.similar_policies || analysis.similar_policies.length === 0"
+                style="color: var(--color-text-muted);">
+                No dynamically similar policies found.
+            </div>
+            <div *ngIf="analysis.similar_policies && analysis.similar_policies.length > 0"
+                style="display: flex; flex-direction: column; gap: 12px;">
+                <div *ngFor="let p of analysis.similar_policies"
+                    style="background: rgba(0,0,0,0.02); padding: 12px; border-radius: 8px; border-left: 3px solid #ff9800; display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <strong style="color: var(--color-text);">#{{ p.id }} - {{ p.title }}</strong>
+                        <div style="font-size: 0.9rem; color: var(--color-text-muted); margin-top: 4px;">{{ p.department
+                            }}</div>
+                    </div>
+                    <div
+                        style="font-weight: bold; background: rgba(255, 152, 0, 0.15); color: #e65100; padding: 4px 8px; border-radius: 8px;">
+                        Similarity: {{ p.similarity_score }}%
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, FormsModule, Validators } from '@angular/forms';
 import { PolicyService, Policy } from '../../services/policy.service';
 import { AuthService, AuthUser } from '../../services/auth.service';
@@ -58,7 +59,7 @@ const FALLBACK_POLICIES: Policy[] = [
 @Component({
   selector: 'app-policy-list',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, RouterModule],
   templateUrl: './policy-list.html',
   styleUrl: './policy-list.css'
 })
@@ -224,16 +225,17 @@ export class PolicyList implements OnInit {
 
     fetch$.subscribe({
       next: (data) => {
-        if (data && data.length > 0) {
+        if (data) {
           this.policies = data;
         }
+
         this.isLoadingData = false;
       },
       error: (err) => {
         console.warn('Primary policies fetch failed, trying public published policies:', err);
         this.policyService.getPublishedPolicies().subscribe({
           next: (publishedData) => {
-            if (publishedData && publishedData.length > 0) {
+            if (publishedData) {
               this.policies = publishedData;
             }
             this.isLoadingData = false;
