@@ -36,7 +36,7 @@ export interface RegisterResponse {
   providedIn: 'root'
 })
 export class AuthService {
-  private readonly API_URL = 'http://localhost:8000/auth';
+  private readonly API_URL = '/api/auth';
   private readonly TOKEN_KEY = 'policygpt_token';
   private readonly USER_KEY = 'policygpt_user';
 

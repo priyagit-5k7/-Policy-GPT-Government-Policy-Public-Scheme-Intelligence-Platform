@@ -75,3 +75,11 @@ Upon the first system boot, the backend automatically seeds essential policies, 
 
 - **Authentication:** All backend operations mutating state are strictly JWT protected. Always pass the `Authorization: Bearer <token>` when using external HTTP clients.
 - **Milestone Completeness:** This repository contains the finalized feature implementations for Milestones 1 through 4 (Auth, Policy Workflows, Analytics, and Docker Containerization).
+
+
+## Deployment & Production Configurations
+The application has been overhauled for production readiness matching **M1-M4 final specifications**:
+- Reverse Proxy: NGINX natively handles all traffic through a centralized `/api` conduit to avoid CORS limitations.
+- Containers: `docker-compose.yml` mounts resilient `postgres_data` persistent volumes.
+- Cloud Target Deployments: For comprehensive cloud deployment steps (OCI/AWS/Azure), refer to the auto-generated `deploy_guide.md` documentation artifact located in the artifact registry mapping.
+

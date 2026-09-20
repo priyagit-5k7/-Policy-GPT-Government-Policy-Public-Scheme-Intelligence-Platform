@@ -25,7 +25,7 @@ export interface ReportSummary {
   providedIn: 'root'
 })
 export class ReportService {
-  private API_URL = 'http://localhost:8000/reports';
+  private API_URL = '/api/reports';
 
   constructor(private http: HttpClient) {}
 

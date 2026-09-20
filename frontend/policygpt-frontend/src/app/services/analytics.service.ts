@@ -63,7 +63,7 @@ export interface AnalyticsOverviewResponse {
     providedIn: 'root'
 })
 export class AnalyticsService {
-    private apiUrl = 'http://localhost:8000/analytics';
+    private apiUrl = '/api/analytics';
 
     constructor(private http: HttpClient) { }
 

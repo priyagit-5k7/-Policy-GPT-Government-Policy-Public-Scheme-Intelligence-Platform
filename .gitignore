@@ -1,1 +1,3 @@
 .env
+*test_analyzer*.py
+backend/fix_db.py

@@ -8,54 +8,6 @@ import { AnalyticsService } from '../../services/analytics.service';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
-const FALLBACK_POLICIES: Policy[] = [
-  {
-    id: 1,
-    title: "National Digital Health Mission Policy 2026",
-    description: "Comprehensive digital healthcare framework providing digital ABHA health IDs, unified health records, e-Pharmacies, and tele-consultation across all AIIMS & PHCs.",
-    category: "Healthcare",
-    department: "Ministry of Health & Family Welfare",
-    state: "All India",
-    status: "PUBLISHED"
-  },
-  {
-    id: 2,
-    title: "PM-KISAN Agricultural Subsidies Policy",
-    description: "Financial support of ₹6,000 per year directly transferred in 3 equal installments to small and marginal farmer families nationwide.",
-    category: "Agriculture",
-    department: "Ministry of Agriculture & Farmers Welfare",
-    state: "All India",
-    status: "PUBLISHED"
-  },
-  {
-    id: 3,
-    title: "National Education Policy (NEP) Skill Upgrade",
-    description: "Integration of vocational skill training, multi-disciplinary undergraduate degrees, credit transfer banks, and coding education from Grade 6.",
-    category: "Education",
-    department: "Ministry of Education",
-    state: "All India",
-    status: "PUBLISHED"
-  },
-  {
-    id: 4,
-    title: "Green Energy & Solar Rooftop Subsidy Policy 2026",
-    description: "Up to 40% central financial assistance subsidy for residential solar rooftop installations, net-metering benefits, and free green electricity up to 300 units.",
-    category: "Environment & Energy",
-    department: "Ministry of New and Renewable Energy",
-    state: "All India",
-    status: "PUBLISHED"
-  },
-  {
-    id: 5,
-    title: "Startup India Innovation & Seed Support Policy",
-    description: "Collateral-free credit guarantees, tax exemption for 3 consecutive years, and seed capital grants up to ₹50 Lakhs for technology startups.",
-    category: "Commerce & Industry",
-    department: "Ministry of Commerce and Industry",
-    state: "All India",
-    status: "PUBLISHED"
-  }
-];
-
 @Component({
   selector: 'app-policy-list',
   standalone: true,
@@ -64,7 +16,7 @@ const FALLBACK_POLICIES: Policy[] = [
   styleUrl: './policy-list.css'
 })
 export class PolicyList implements OnInit {
-  policies: Policy[] = FALLBACK_POLICIES;
+  policies: Policy[] = [];
   policyForm: FormGroup;
   showForm = false;
   isEditing = false;

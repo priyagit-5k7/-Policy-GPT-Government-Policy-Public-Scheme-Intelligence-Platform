@@ -19,7 +19,7 @@ export interface Scheme {
   providedIn: 'root'
 })
 export class SchemeService {
-  private API_URL = 'http://localhost:8000/schemes';
+  private API_URL = '/api/schemes';
 
   constructor(private http: HttpClient) {}
 

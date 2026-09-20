@@ -19,7 +19,7 @@ export interface UnreadCount {
   providedIn: 'root'
 })
 export class NotificationService {
-  private API_URL = 'http://localhost:8000/notifications';
+  private API_URL = '/api/notifications';
 
   constructor(private http: HttpClient) { }
 

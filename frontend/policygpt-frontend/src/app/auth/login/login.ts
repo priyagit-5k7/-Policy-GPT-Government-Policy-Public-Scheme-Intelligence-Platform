@@ -57,7 +57,7 @@ export class Login {
       error: (err) => {
         this.isLoading = false;
         if (err?.status === 0) {
-          this.errorMessage = 'Cannot connect to backend server. Please make sure FastAPI backend is running on http://localhost:8000.';
+          this.errorMessage = 'Cannot connect to backend server. Please make sure FastAPI backend is running on /api.';
         } else if (err?.error?.detail) {
           this.errorMessage = err.error.detail;
         } else {

@@ -23,7 +23,7 @@ export interface Policy {
   providedIn: 'root'
 })
 export class PolicyService {
-  private API_URL = 'http://localhost:8000/policies';
+  private API_URL = '/api/policies';
 
   constructor(private http: HttpClient) { }
 
@@ -76,7 +76,7 @@ export class PolicyService {
   }
 
   analyzePolicy(id: number): Observable<any> {
-    return this.http.get<any>(`http://localhost:8000/analyzer/${id}`);
+    return this.http.get<any>(`/api/analyzer/${id}`);
   }
 }
 

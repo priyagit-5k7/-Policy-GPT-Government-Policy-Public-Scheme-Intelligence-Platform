@@ -43,7 +43,7 @@ export interface DepartmentAnalyticsResponse {
     providedIn: 'root'
 })
 export class DepartmentAnalyticsService {
-    private API_URL = 'http://localhost:8000/analytics';
+    private API_URL = '/api/analytics';
 
     constructor(private http: HttpClient) { }
 

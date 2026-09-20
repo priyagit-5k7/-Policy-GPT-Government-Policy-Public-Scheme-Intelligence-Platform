@@ -19,7 +19,7 @@ export interface Feedback {
   providedIn: 'root'
 })
 export class FeedbackService {
-  private API_URL = 'http://localhost:8000/feedback';
+  private API_URL = '/api/feedback';
 
   constructor(private http: HttpClient) {}
 
