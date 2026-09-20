@@ -260,15 +260,21 @@ app = FastAPI(
 # ---------------------------------------------------------------------------
 # CORS — allow Angular dev server (port 4200) to call the API (port 8000)
 # ---------------------------------------------------------------------------
+import os
+frontend_url = os.getenv("FRONTEND_URL")
+allowed_origins = [
+    "http://localhost:4200", 
+    "http://localhost:58609",
+    "http://127.0.0.1:4200", 
+    "http://localhost:8000", 
+    "http://127.0.0.1:8000"
+]
+if frontend_url:
+    allowed_origins.append(frontend_url)
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:4200", 
-        "http://localhost:58609",
-        "http://127.0.0.1:4200", 
-        "http://localhost:8000", 
-        "http://127.0.0.1:8000"
-    ],
+    allow_origins=allowed_origins,
     allow_origin_regex=r"https?://(localhost|127\.0\.0\.1)(:\d+)?",
     allow_credentials=True,
     allow_methods=["*"],
